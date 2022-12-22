@@ -4,4 +4,9 @@ class PagesController < ApplicationController
 
   def game
   end
+
+  def end_game
+    raise
+    # récuperer le json et faire mon calcul
+  end
 end
