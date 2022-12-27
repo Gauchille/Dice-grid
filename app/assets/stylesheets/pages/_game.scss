@@ -6,10 +6,10 @@
   height: 100vh;
 }
 
-table {
-  border: 10px solid black;
-  background: black;
-}
+// table {
+//   border: 1px solid black;
+//   background: black;
+// }
 
 
 tbody {
@@ -27,7 +27,8 @@ td {
   align-items: center;
   height: 7vw;
   width: 7vw;
-  margin: 1px;
+  margin: 0.5px;
+  border: 2px solid black;
   background: white;
   font-size: 1.5em;
 }
@@ -44,5 +45,40 @@ td {
 }
 
 .active-tile {
-  background-color: green;
+  background-color: #60fa60b4;
+}
+
+
+#score-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+#row-grid {
+  display: flex;
+  align-items: flex-end;
+}
+
+#grid {
+//   border-top: 2.5px solid black;
+//   border-left: 2.5px solid black;
+//   background: black;
+}
+
+#score_row {
+  margin-left: 2.5px;
+//   background: black;
+//   border-left: 2.5px solid black;
+//   border-top: 2.5px solid black;
+}
+
+#score_col {
+//   background: black;
+//   border: 2.5px solid black
+  margin-top: 2.5px;
+  td:last-child {
+    margin-left: 2.5px;
+  }
+
 }

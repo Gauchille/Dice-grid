@@ -13,7 +13,10 @@ export default class extends Controller {
     this.grid = document.getElementById("grid");
     this.rows = this.grid.getElementsByTagName("tr");
     this.tiles = this.grid.getElementsByTagName("td");
-    console.log(this.formTarget);
+    this.scoreCol = document.getElementById("score_col");
+    this.scoreColTiles = this.scoreCol.getElementsByTagName("td");
+    this.scoreRow = document.getElementById("score_row");
+    this.scoreRowTiles = this.scoreRow.getElementsByTagName("td");
     this.SetFirstCell();
     this.newTurn();
     this.startGame();
@@ -132,13 +135,8 @@ export default class extends Controller {
     tile.classList.remove("active-tile");
   }
 
-  endGame() {
-    console.log(this.formTarget.getElementsByTagName("input"))
+  async endGame() {
     let gridScore = {};
-    let input = this.formTarget.getElementsByTagName("input")[0]
-    let inputCsrf = this.formTarget.getElementsByTagName("input")[1]
-    let csrfToken = document.querySelector('meta[name="csrf-token"]').content
-    console.log(csrfToken);
     let cells = [];
     let y = 0
     // créer un array par ligne avec les inner html des td de chaque ligne
@@ -153,13 +151,25 @@ export default class extends Controller {
     gridScore["row4"] = cells;
     const token = document.querySelector('[name=csrf-token]').content;
     axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
-    axios.post('', json_results)
-
-
-    //construire le JSon avec un array/ligne, colonne + diagonale
-    // envoi du score dans une modal
-    //
+    const response = await axios.post('/game/end_game', gridScore);
+    let scores = response.data["scores"];
+    this.scoreCol.classList.remove("d-none");
+    this.scoreRow.classList.remove("d-none");
+    this.scoreGrid(scores);
     console.log("grille fini, le résultat arrive ...");
+
+  }
+
+  scoreGrid(scores) {
+    this.scoreColTiles.item(0).innerHTML = scores["diago"];
+    this.scoreRowTiles.item(0).innerHTML = scores["diago"];
+    this.scoreColTiles.item(6).innerHTML = scores["total"];
+    for (let i = 1; i < 6; i++) {
+      this.scoreColTiles.item(i).innerHTML = scores[`col${i - 1}`];
+    }
+    for (let i = 1; i < 6; i++) {
+      this.scoreRowTiles.item(i).innerHTML = scores[`row${i - 1}`];
+    }
   }
 
 }
