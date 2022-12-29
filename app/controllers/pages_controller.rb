@@ -1,10 +1,6 @@
 class PagesController < ApplicationController
-  def home
-  end
+  skip_before_action :authenticate_user!, only: :home
 
-  def end_game
-    # récuperer le json et faire mon calcul
-    grid = params
-    puts grid
+  def home
   end
 end

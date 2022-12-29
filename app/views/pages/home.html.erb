@@ -1,2 +1,7 @@
 <h1>Détrak</h1>
-<a href="/game">Start a new détrak game</a>
+<%= simple_form_for() do |f| %>
+  <%= f.input :nickname
+  <%= f.submit %>
+<% end %>
+<a class="btn btn-primary" href="/game">Start a new détrak game</a>
+<a class="btn btn-outline-secondary" href="#">join a game</a>

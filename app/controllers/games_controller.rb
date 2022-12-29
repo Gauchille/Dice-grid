@@ -1,4 +1,7 @@
 class GamesController < ApplicationController
+  skip_before_action :authenticate_user!
+
+
   def start
   end
 
@@ -7,8 +10,8 @@ class GamesController < ApplicationController
     rows = params[:game].values.each_cons(5).to_a[0]
     cols = grid_creator(rows)[0]
     diago = grid_creator(rows)[1]
-    rows.each_with_index { |row, i| score(row).positive? ? score_grid["row#{i}"] = score(row) : score_grid["row#{i}"] = -5 }
-    cols.each_with_index { |col, i| score(col).positive? ? score_grid["col#{i}"] = score(col) : score_grid["col#{i}"] = -5 }
+    rows.each_with_index { |row, i| score_grid["row#{i}"] = score(row) }
+    cols.each_with_index { |col, i| score_grid["col#{i}"] = score(col) }
     score_grid["diago"] = score(diago)
     score_grid["total"] = score_grid.values.sum + score(diago)
     render json: { scores: score_grid }
@@ -48,7 +51,7 @@ class GamesController < ApplicationController
       previous = element
     end
     score += score_math(current_array) if current_array.size > 1
-    return score
+    return score.zero? ? -5 : score
   end
 
   def score_math(array)
