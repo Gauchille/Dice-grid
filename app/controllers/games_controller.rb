@@ -5,6 +5,9 @@ class GamesController < ApplicationController
   def start
   end
 
+  def lobby
+  end
+
   def end_game
     score_grid = {}
     rows = params[:game].values.each_cons(5).to_a[0]
