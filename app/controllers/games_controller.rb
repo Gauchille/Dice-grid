@@ -6,11 +6,12 @@ class GamesController < ApplicationController
   end
 
   def lobby
+    @user
   end
 
   def end_game
     score_grid = {}
-    rows = params[:game].values.each_cons(5).to_a[0]
+    rows = params.values.each_cons(5).to_a[0]
     cols = grid_creator(rows)[0]
     diago = grid_creator(rows)[1]
     rows.each_with_index { |row, i| score_grid["row#{i}"] = score(row) }

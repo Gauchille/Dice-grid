@@ -9,6 +9,7 @@ export default class extends Controller {
   static values = { x: Number, y: Number }
 
   connect() {
+    console.log("début du jeu ");
     this.gridValues = ["X", "I", "V", "|||", "#", "Ø" ]
     this.grid = document.getElementById("grid");
     this.rows = this.grid.getElementsByTagName("tr");
@@ -150,9 +151,13 @@ export default class extends Controller {
     }
     gridScore["row4"] = cells;
     const token = document.querySelector('[name=csrf-token]').content;
+    console.log(token);
+    console.log(gridScore);
     axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
     const response = await axios.post('/game/end_game', gridScore);
     let scores = response.data["scores"];
+    console.log(scores);
+    console.log(response);
     this.scoreCol.classList.remove("d-none");
     this.scoreRow.classList.remove("d-none");
     this.scoreGrid(scores);
